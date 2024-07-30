@@ -14,7 +14,9 @@ import { createUser } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "./PatientForm"
 import { Radio } from "lucide-react"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
-import { GenderOptions } from "@/constants"
+import { Doctors, GenderOptions } from "@/constants"
+import { SelectItem } from "../ui/select"
+import Image from "next/image"
 
 const RegisterForm = ({ user }: { user: User }) => {
     const router = useRouter();
@@ -104,10 +106,10 @@ const RegisterForm = ({ user }: { user: User }) => {
                         control={form.control}
                         name='gender'
                         label='Gender'
-                        renderSkeleton={(field)=>(
+                        renderSkeleton={(field) => (
                             <FormControl>
                                 <RadioGroup className="flex h-11 gap-6 xl:justify-between" onValueChange={field.onChnage} defaultValue={field.value}>
-                                    {GenderOptions.map((option)=>(
+                                    {GenderOptions.map((option) => (
                                         <div key={option} className="radio-group">
                                             <RadioGroupItem value={option} id={option} />
                                             <label htmlFor={option} className="cursor-pointer">{option}</label>
@@ -118,12 +120,73 @@ const RegisterForm = ({ user }: { user: User }) => {
                         )}
                     />
                 </div>
-                <div className="flex flex-col gap-6 xl:flex-row ">
 
+
+                <div className="flex flex-col gap-6 xl:flex-row ">
+                    <CustomFormField
+                        fieldType={FormFieldType.INPUT}
+                        control={form.control}
+                        name='address'
+                        label="Address"
+                        placeholder='address'
+                    />
+                    <CustomFormField
+                        fieldType={FormFieldType.INPUT}
+                        control={form.control}
+                        name='occupation'
+                        label="Occupation"
+                        placeholder='occupation'
+                    />
                 </div>
                 <div className="flex flex-col gap-6 xl:flex-row ">
+                    <CustomFormField
+                        fieldType={FormFieldType.INPUT}
+                        control={form.control}
+                        name='emergencyContactName'
+                        label='Emergency Contact Name'
+                        placeholder='Guardian Name'
+                    />
 
+                    <CustomFormField
+                        fieldType={FormFieldType.PHONE_INPUT}
+                        control={form.control}
+                        name='emergencyContactNumber'
+                        label='Emergency Contact Number'
+                        placeholder='Phone number'
+                    />
                 </div>
+
+                <section className="space-y-6">
+                    <div className="mb-9 space-y-1">
+                        <h2 className="sub-header">
+                            Medical Information
+                        </h2>
+                    </div>
+                </section>
+
+                <CustomFormField
+                    fieldType={FormFieldType.SELECT}
+                    control={form.control}
+                    name='primaryPhysician'
+                    label='Primary Physician'
+                    placeholder='Select a physician'
+                >
+                    {Doctors.map((doctor) => (
+                        <SelectItem key={doctor.name} value={doctor.name}>
+                            <div className="flex cursor-pointer items-center gap-2">
+                                <Image
+                                src={doctor.image}
+                                width={32}
+                                height={32}
+                                alt={doctor.name}
+                                className="rounded-full border border-dark-500"
+                                />
+                                <p>{doctor.name}</p>
+                            </div>
+                        </SelectItem>
+                    ))}
+                </CustomFormField>
+
                 <div className="flex flex-col gap-6 xl:flex-row ">
 
                 </div>

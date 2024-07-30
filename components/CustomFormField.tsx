@@ -18,6 +18,7 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { render } from 'react-dom';
+import { Select, SelectValue } from './ui/select';
 
 interface CustomProps {
     control: Control<any>,
@@ -84,17 +85,28 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
                     />
                     <FormControl>
                         <DatePicker selected={field.value} onChange={(date) => field.onChange(date)}
-                        dateFormat={dateFormat ?? 'MM/dd/yyyy'} 
-                        showTimeSelect={showTimeSelect ?? false}
-                        timeInputLabel='Time:'
-                        wrapperClassName='date-picker'
+                            dateFormat={dateFormat ?? 'MM/dd/yyyy'}
+                            showTimeSelect={showTimeSelect ?? false}
+                            timeInputLabel='Time:'
+                            wrapperClassName='date-picker'
                         />
                     </FormControl>
                 </div>
             )
+        case FormFieldType.SELECT:
+            return (
+                <FormControl>
+                    <Select onValueChange={field.change}
+                        defaultValue={field.value}>
+                        <FormControl className='shad-select-trigger'>
+                            <SelectValue placeholder={placeholder} />
+                        </FormControl>
+                    </Select>
+                </FormControl>
+            )
         case FormFieldType.SKELETON:
             return renderSkeleton ? renderSkeleton(field) : null
-            
+
         default:
             break;
     }
