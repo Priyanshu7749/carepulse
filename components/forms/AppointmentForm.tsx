@@ -91,9 +91,10 @@ export const AppointmentForm = ({
           );
         }
       } else {
-        const appointmentToUpdate = {
+        const appointmentToUpdate: UpdateAppointmentParams = {
           userId,
           appointmentId: appointment?.$id!,
+          timeZone: "your-time-zone", // Replace "your-time-zone" with the actual time zone value
           appointment: {
             primaryPhysician: values.primaryPhysician,
             schedule: new Date(values.schedule),
